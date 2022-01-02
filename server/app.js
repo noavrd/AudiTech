@@ -20,10 +20,12 @@ app.get('/', (req, res) => {
 app.get('/repo', async (req, res) => {
   try {
     //change repo
-    const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
-      owner: 'noavrd',
-      repo: 'url-shortner',
-    });
+    // const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+    //   owner: 'noavrd',
+    //   repo: 'url-shortner',
+    // });
+
+    const response = await octokit.request('GET /notifications');
 
     res.send(response);
   } catch (err) {
