@@ -17,6 +17,15 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get('/allPullRequests', async (req, res) => {
+  try {
+    const allPulls = await PullRequest.find({});
+    res.send(allPulls);
+  } catch (err) {
+    res.status(500).send('Server problem');
+  }
+});
+
 app.post('/repo', async (req, res) => {
   try {
     //change repo
@@ -38,14 +47,14 @@ async function createNewPull(allPulls) {
   //id, number, title, user (user.html_url), created_at, closed_at,labels
   for (let pull of allPulls) {
     const existsPulls = await PullRequest.findOne({
-      id: pull.id,
+      pullID: pull.id,
     });
     console.log(existsPulls);
 
     if (!existsPulls) {
       console.log(pull.labels);
       const newPullRequest = new PullRequest({
-        id: pull.id,
+        pullID: pull.id,
         number: pull.number,
         title: pull.title,
         user: pull.user['html_url'],

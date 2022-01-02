@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const pullRequestSchema = new mongoose.Schema({
-  id: { type: Number, require: true },
+  pullID: { type: Number, require: true },
   number: { type: Number, require: true },
   title: { type: String, require: true },
   user: { type: String },
