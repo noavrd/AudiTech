@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const pullRequestSchema = new mongoose.Schema({
+  id: { type: Number, require: true },
+  number: { type: Number, require: true },
   title: { type: String, require: true },
-  content: { type: Array, require: true },
-  author: { type: String },
-  creationDate: { type: Date, require: true },
+  user: { type: String },
+  createdAt: { type: Date, require: true },
+  closedAt: { type: Date, require: true },
+  labels: { type: Array, require: false },
 });
 
 const PullRequest = mongoose.model('pullRequest', pullRequestSchema);

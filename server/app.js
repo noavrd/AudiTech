@@ -17,20 +17,45 @@ app.get('/', (req, res) => {
   }
 });
 
-app.get('/repo', async (req, res) => {
+app.post('/repo', async (req, res) => {
   try {
     //change repo
-    // const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
-    //   owner: 'noavrd',
-    //   repo: 'url-shortner',
-    // });
-
-    const response = await octokit.request('GET /notifications');
-
-    res.send(response);
+    const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+      owner: 'noavrd',
+      repo: 'demo-repo',
+    });
+    // const response = await octokit.request('GET /notifications');
+    await createNewPull(response.data);
+    console.log(response.data);
+    res.status(200).send('Data added');
+    // res.send(response.data);
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+async function createNewPull(allPulls) {
+  //id, number, title, user (user.html_url), created_at, closed_at,labels
+  for (let pull of allPulls) {
+    const existsPulls = await PullRequest.findOne({
+      id: pull.id,
+    });
+    console.log(existsPulls);
+
+    if (!existsPulls) {
+      console.log(pull.labels);
+      const newPullRequest = new PullRequest({
+        id: pull.id,
+        number: pull.number,
+        title: pull.title,
+        user: pull.user['html_url'],
+        createdAt: pull.created_at,
+        closedAt: pull.closed_at,
+        labels: pull.labels,
+      });
+      await newPullRequest.save();
+    }
+  }
+}
 
 module.exports = app;
