@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Octokit } = require('@octokit/core');
+const PullRequest = require('./models/pullReq');
 
 const app = express();
 const octokit = new Octokit({ auth: process.env.TOKEN });
