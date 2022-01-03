@@ -19,6 +19,12 @@ app.get('/', (req, res) => {
 
 app.get('/allPullRequests', async (req, res) => {
   try {
+    await PullRequest.remove({});
+    const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
+      owner: 'noavrd',
+      repo: 'demo-repo',
+    });
+    await createNewPull(response.data);
     const allPulls = await PullRequest.find({});
     res.send(allPulls);
   } catch (err) {
@@ -26,33 +32,13 @@ app.get('/allPullRequests', async (req, res) => {
   }
 });
 
-app.post('/repo', async (req, res) => {
-  try {
-    //change repo
-    const response = await octokit.request('GET /repos/{owner}/{repo}/pulls', {
-      owner: 'noavrd',
-      repo: 'demo-repo',
-    });
-    // const response = await octokit.request('GET /notifications');
-    await createNewPull(response.data);
-    console.log(response.data);
-    res.status(200).send('Data added');
-    // res.send(response.data);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
 async function createNewPull(allPulls) {
-  //id, number, title, user (user.html_url), created_at, closed_at,labels
   for (let pull of allPulls) {
     const existsPulls = await PullRequest.findOne({
       pullID: pull.id,
     });
-    console.log(existsPulls);
 
     if (!existsPulls) {
-      console.log(pull.labels);
       const newPullRequest = new PullRequest({
         pullID: pull.id,
         number: pull.number,

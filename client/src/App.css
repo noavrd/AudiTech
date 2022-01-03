@@ -43,6 +43,6 @@ h1 {
 .label {
   padding: 1vh;
   font-weight: normal;
-  color: white;
   border-radius: 15px;
+  margin-left: 1vw;
 }

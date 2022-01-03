@@ -4,13 +4,9 @@ import SinglePull from './SinglePull';
 
 export default function Main() {
   const [allPulls, setAllPulls] = useState([]);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    // await axios
-    //   .post('http://localhost:3001/repo')
-    //   .then((result) => console.log(result))
-    //   .catch((err) => console.log(err));
-
     axios
       .get('http://localhost:3001/allPullRequests')
       .then((result) =>
@@ -27,9 +23,10 @@ export default function Main() {
     //     return a.number - b.number;
     //   })
     // );
+
+    setFinished(true);
   }, []);
 
-  console.log(allPulls);
   return (
     <div>
       <h1>Pull Requests</h1>

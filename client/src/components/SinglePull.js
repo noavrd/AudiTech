@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 export default function SinglePull({ pull, number }) {
-  console.log(pull);
   const [createdAgo, setCreatedAgo] = useState();
   const [time, setTime] = useState('');
   const [labels, setLabels] = useState(pull.labels);
