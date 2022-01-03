@@ -59,13 +59,11 @@ export default function SinglePull({ pull, number }) {
     <div className={number === 0 ? 'first' : 'single'}>
       <div className="title-pull">
         {pull.title}
-        {console.log(labels.length)}
         {labels.length !== 0 &&
           labels.map((label) => (
             <span
               className="label"
               style={{ backgroundColor: `#${label.color}` }}>
-              {console.log(label.color)}
               {label.name}
             </span>
           ))}
@@ -75,9 +73,6 @@ export default function SinglePull({ pull, number }) {
         #{pull.number} created {createdAgo}{' '}
         {createdAgo === 1 ? time : time + 's'} ago by {userName}
       </div>
-      {/* <div>{pull.title}</div>
-      <div>{pull.title}</div>
-      <div>{pull.title}</div> */}
     </div>
   );
 }

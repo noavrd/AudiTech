@@ -13,8 +13,20 @@ export default function Main() {
 
     axios
       .get('http://localhost:3001/allPullRequests')
-      .then((result) => setAllPulls(result.data))
+      .then((result) =>
+        setAllPulls(
+          result.data.sort((a, b) =>
+            a.number < b.number ? 1 : b.number < a.number ? -1 : 0
+          )
+        )
+      )
       .catch((err) => console.log(err));
+
+    // setAllPulls(
+    //   allPulls.sort(function (a, b) {
+    //     return a.number - b.number;
+    //   })
+    // );
   }, []);
 
   console.log(allPulls);
