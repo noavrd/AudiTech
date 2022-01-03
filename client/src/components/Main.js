@@ -6,6 +6,11 @@ export default function Main() {
   const [allPulls, setAllPulls] = useState([]);
 
   useEffect(() => {
+    // await axios
+    //   .post('http://localhost:3001/repo')
+    //   .then((result) => console.log(result))
+    //   .catch((err) => console.log(err));
+
     axios
       .get('http://localhost:3001/allPullRequests')
       .then((result) => setAllPulls(result.data))
