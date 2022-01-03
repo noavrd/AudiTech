@@ -23,7 +23,7 @@ export default function Main() {
       <h1>Pull Requests</h1>
       <div className="all-pulls">
         {allPulls.map((pull, i) => (
-          <SinglePull pull={pull} key={i} />
+          <SinglePull pull={pull} key={i} number={i} />
         ))}
       </div>
     </div>

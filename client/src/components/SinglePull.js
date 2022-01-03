@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export default function SinglePull({ pull }) {
+export default function SinglePull({ pull, number }) {
   console.log(pull);
   const [createdAgo, setCreatedAgo] = useState();
   const [time, setTime] = useState('');
+  const [labels, setLabels] = useState(pull.labels);
 
   let userName = pull.user.slice(19);
 
   useEffect(() => {
+    //Calculate time that the pull created ago
     const current = new Date();
     const dateCurrent =
       current.getDate() +
@@ -23,8 +25,7 @@ export default function SinglePull({ pull }) {
       (created.getMonth() + 1) +
       '/' +
       created.getFullYear();
-    console.log(dateCurrent);
-    console.log(dateCreated);
+
     if (dateCreated === dateCurrent) {
       if (current.getHours() === created.getHours()) {
         if (current.getMinutes() === created.getMinutes()) {
@@ -54,10 +55,22 @@ export default function SinglePull({ pull }) {
     }
   }, []);
 
-  console.log(createdAgo);
   return (
-    <div>
-      <div>{pull.title}</div>
+    <div className={number === 0 ? 'first' : 'single'}>
+      <div className="title-pull">
+        {pull.title}
+        {console.log(labels.length)}
+        {labels.length !== 0 &&
+          labels.map((label) => (
+            <span
+              className="label"
+              style={{ backgroundColor: `#${label.color}` }}>
+              {console.log(label.color)}
+              {label.name}
+            </span>
+          ))}
+      </div>
+
       <div>
         #{pull.number} created {createdAgo}{' '}
         {createdAgo === 1 ? time : time + 's'} ago by {userName}
